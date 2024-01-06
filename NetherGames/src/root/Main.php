@@ -76,15 +76,11 @@ class Main extends PluginBase
                 }
                 switch (strtolower($args[0])) {
                     case 'spleef':
-                        $this->worldsManager->generateVoidWorld("spleef");
-                        $player->teleport($this->worldsManager->joinWorld("spleef")->getSpawnLocation());
-                        $sender->sendMessage($player->getWorld()->getFolderName());
-
-                        // if (self::$registered === false) {
-                        //     $this->getServer()->getPluginManager()->registerEvents(new SpleefConfig($this->getServer()), $this);
-                        //     self::$registered = true;
-                        // }
-                        // SpleefConfig::configSpleef(EventListener::$joinedPlayer);
+                        if (self::$registered === false) {
+                            $this->getServer()->getPluginManager()->registerEvents(new SpleefConfig($this->getServer()), $this);
+                            self::$registered = true;
+                        }
+                        SpleefConfig::configSpleef(EventListener::$joinedPlayer);
                         break;
 
                     default:
@@ -93,8 +89,7 @@ class Main extends PluginBase
                 }
                 break;
             case 'lobby':
-                $sender->sendMessage($player->getWorld()->getFolderName());
-                $player->teleport($this->worldsManager->joinWorld("world")->getSpawnLocation());
+                $sender->sendMessage("Lobby not configured");
                 break;
             default:
                 throw new \AssertionError("This line will never be executed");

@@ -42,7 +42,7 @@ class SpleefConfig implements Listener
         $entity = $event->getEntity();
         $block = $event->getBlockHit();
         if (str_contains(strtolower(strval($entity)), "snowball") && $block->getTypeId() === 10472) {
-            $this->server->getWorldManager()->getWorldByName("spleef")->setBlock($block->getPosition(), VanillaBlocks::AIR());
+            $this->server->getWorldManager()->getWorldByName("world")->setBlock($block->getPosition(), VanillaBlocks::AIR());
             self::$score += 2;
         }
     }

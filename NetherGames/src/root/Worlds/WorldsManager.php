@@ -24,32 +24,32 @@ class WorldsManager
 
     // private ?GameVariables $gameVar = null;
 
-    public function __construct()
-    {
-        $this->server = Server::getInstance();
-        $this->worldManager = $this->server->getWorldManager();
-        $this->worldCreationOptions = new WorldCreationOptions();
-    }
+    // public function __construct()
+    // {
+    //     $this->server = Server::getInstance();
+    //     $this->worldManager = $this->server->getWorldManager();
+    //     $this->worldCreationOptions = new WorldCreationOptions();
+    // }
 
-    public function getWorld(string $worldName)
-    {
-        return $this->worldManager->getWorldByName($worldName);
-    }
+    // public function getWorld(string $worldName)
+    // {
+    //     return $this->worldManager->getWorldByName($worldName);
+    // }
 
-    public function joinWorld(string $worldName)
-    {
-        $this->loadWorld($worldName);
-        return $this->worldManager->getWorldByName($worldName);
-    }
+    // public function joinWorld(string $worldName)
+    // {
+    //     $this->loadWorld($worldName);
+    //     return $this->worldManager->getWorldByName($worldName);
+    // }
 
-    public function loadWorld(string $worldName)
-    {
-        return $this->worldManager->loadWorld($worldName);
-    }
+    // public function loadWorld(string $worldName)
+    // {
+    //     return $this->worldManager->loadWorld($worldName);
+    // }
 
 
-    public function getWorldInstance(string $worldName, int $worldID): string
-    {
-        // $this->worldManager->generateWorld()
-    }
+    // public function getWorldInstance(string $worldName, int $worldID): string
+    // {
+    //     // $this->worldManager->generateWorld()
+    // }
 }
