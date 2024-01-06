@@ -1,0 +1,32 @@
+name: NetherGames
+version: 1.0.0
+main: \root\Main
+api: 5.10.0
+
+commands:
+  stats:
+    description: Get the stats of any player - /stats [player]
+    aliases:
+      - player
+    permission: player
+
+  play:
+    description: Join the queue of a game - /play <game>
+    aliases:
+      - queue
+      - q
+      - game
+    permission: player
+
+  lobby:
+    description: Return to the lobby - /lobby
+    aliases:
+      - hub
+      - spawn
+      - home
+    permission: player
+
+permissions:
+  player:
+    description: player
+    default: true
