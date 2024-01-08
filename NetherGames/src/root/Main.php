@@ -12,16 +12,18 @@ use pocketmine\Server;
 
 use root\Listener\EventListener;
 use root\commands\stats\StatsForms;
+use root\Worlds\WorldsManager;
+use root\Player\NametagManager;
 use NetherGamesAssets\Cache;
 use Minigames\Spleef\SpleefConfig;
 use NetherGamesAssets\NetherGamesAPI;
-use root\Worlds\WorldsManager;
 
 class Main extends PluginBase
 {
 
     private ?NetherGamesAPI $netherGamesAPI = null;
-    private ?WorldsManager $worldsManager = null;
+    private ?NametagManager $nametagManager = null;
+    // private ?WorldsManager $worldsManager = null;
     public ?Cache $cache = null;
     private ?StatsForms $forms = null;
 
@@ -31,9 +33,11 @@ class Main extends PluginBase
     public function onEnable(): void
     {
         $this->netherGamesAPI = new NetherGamesAPI();
-        $this->worldsManager = new WorldsManager();
+        // $this->worldsManager = new WorldsManager();
+        $this->nametagManager = new NametagManager();
         $this->cache = new Cache();
         $this->forms = new StatsForms();
+
         $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
     }
 

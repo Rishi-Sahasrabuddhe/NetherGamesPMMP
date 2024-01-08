@@ -58,40 +58,95 @@ class NetherGamesAPI
         }
     }
 
-    public function getFactionStats(string $factionArg0, bool $fromPlayer = false, string $target = "", string $faction = "")
+
+    // public function getGuildStats(bool $fromPlayer = false, string $target = "", string $guild = "")
+    // {
+
+    //     $response = curl_exec($this->curl);
+    //     if ($response === false) {
+    //         return curl_error($this->curl);
+    //     }
+    //     if ($fromPlayer) {
+    //         $url = 'https://api.ngmc.co/v1/players/' . $target;
+    //         curl_setopt($this->curl, CURLOPT_URL, $url);
+    //         $response = curl_exec($this->curl);
+    //         $decodedResponse = json_decode($response, true);
+    //         if ($decodedResponse['guild'] !== null && isset($decodedResponse['guild'])) {
+    //             $guild = $decodedResponse['guild'];
+    //         } else {
+    //             $guild = "";
+    //         }
+    //     }
+
+    //     $url = 'https://api.ngmc.co/v1/guilds/' . $guild;
+    //     curl_setopt($this->curl, CURLOPT_URL, $url);
+    //     $response = curl_exec($this->curl);
+    //     $decodedResponse = json_decode($response, true);
+    //     if (isset($decodedResponse)) {
+    //         return json_encode($decodedResponse);
+    //     } else {
+    //         return true;
+    //     }
+    // }
+
+
+    public function getGuildStats(bool $fromPlayer = false, string $target = "", string $guild = "")
     {
+        if ($fromPlayer) {
+            $url = 'https://api.ngmc.co/v1/players/' . $target;
+            curl_setopt($this->curl, CURLOPT_URL, $url);
+            $response = curl_exec($this->curl);
+            $decodedResponse = json_decode($response, true);
 
-        $response = curl_exec($this->curl);
-        if ($response === false) {
-            return curl_error($this->curl);
-        } else {
-            if ($fromPlayer) {
-                $url = 'https://api.ngmc.co/v1/players/' . $target;
-                curl_setopt($this->curl, CURLOPT_URL, $url);
-                $response = curl_exec($this->curl);
-                $decodedResponse = json_decode($response, true);
-
-                if (isset($decodedResponse['factionData']) && $decodedResponse['factionData'] !== null) {
-                    if ($decodedResponse['factionData']['faction'] !== null && isset($decodedResponse['factionData']['faction']['name'])) {
-                        $faction = $decodedResponse['factionData']['faction']['name'];
-                    } else {
-                        $faction = "";
-                    }
-                } else {
-                    $faction = "";
-                }
+            if ($decodedResponse !== null && isset($decodedResponse['guild'])) {
+                $guild = $decodedResponse['guild'];
+            } else {
+                $guild = "";
             }
+        }
 
+        // Check if a valid URL is set before making the cURL request
+        if (!empty($guild)) {
+            $url = 'https://api.ngmc.co/v1/guilds/' . $guild;
+            curl_setopt($this->curl, CURLOPT_URL, $url);
+            $response = curl_exec($this->curl);
+            $decodedResponse = json_decode($response, true);
+
+            if ($decodedResponse !== null) {
+                return $decodedResponse;
+            }
+        }
+
+        return [];
+    }
+    public function getFactionStats(bool $fromPlayer = false, string $target = "", string $faction = "")
+    {
+        if ($fromPlayer) {
+            $url = 'https://api.ngmc.co/v1/players/' . $target;
+            curl_setopt($this->curl, CURLOPT_URL, $url);
+            $response = curl_exec($this->curl);
+            $decodedResponse = json_decode($response, true);
+
+            if ($decodedResponse !== null && isset($decodedResponse['factionData']['faction'])) {
+                $guild = $decodedResponse['factionData']['faction'];
+            } else {
+                $guild = "";
+            }
+        }
+
+        // Check if a valid URL is set before making the cURL request
+        if (!empty($guild)) {
             $url = 'https://api.ngmc.co/v1/factions/' . $faction;
             curl_setopt($this->curl, CURLOPT_URL, $url);
             $response = curl_exec($this->curl);
             $decodedResponse = json_decode($response, true);
-            if (isset($decodedResponse[$factionArg0])) {
-                return json_encode($decodedResponse[$factionArg0]);
-            } else {
-                return true;
+
+            if ($decodedResponse !== null) {
+                return $decodedResponse;
             }
         }
+
+        return [];
     }
 
     public function getPlayerName(string $target)

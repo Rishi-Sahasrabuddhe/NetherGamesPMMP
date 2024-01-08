@@ -84,6 +84,7 @@ class StatsForms
         $form->addButton("Game Stats");
         $form->addButton("Player Info");
         $form->sendToPlayer($player);
+        Cache::cacheFaction(true, $target); //s
         return $form;
     }
 
@@ -319,6 +320,8 @@ class StatsForms
                 $gameStats = "Factions";
 
                 $data = Cache::$playerStatsCached['factionData'];
+                $factionData = Cache::$factionStatsCached;
+                $player->sendMessage($factionData);
 
                 if ($data === null) {
                     $form->addLabel("No factions stats. Hop on to Factions to get Factions records!");
@@ -328,9 +331,9 @@ class StatsForms
                 if ($data['faction'] === null) {
                     $form->addLabel("Faction: No faction joined");
                 } else {
-                    $factionName = str_replace('"', '', $this->netherGamesAPI->getFactionStats("name", true, $target));
-                    $factionStrength = $this->netherGamesAPI->getFactionStats("strength", true, $target);
-                    $factionMotd = str_replace('"', '', $this->netherGamesAPI->getFactionStats("motd", true, $target));
+                    $factionName = str_replace('"', '', $factionData['name']);
+                    $factionStrength = $factionData['strength'];
+                    $factionMotd = str_replace('"', '', $factionData['modt']);
                     $form->addLabel("Faction: " . $factionName);
                     $form->addLabel("Faction Strength: " . $factionStrength);
                     $form->addLabel("Faction MOTD: " . $factionMotd);
